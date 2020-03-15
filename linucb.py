@@ -1,3 +1,13 @@
+'''
+linucb.py
+
+Run 20 permutations of the LinUCB algorithm on the given dataset, calculate the
+upper and lower confidence bounds of the results, and plot them as needed.
+
+To run the augmented version, use data/augmented_features.csv, and change d=13
+To run the initial version, use data/features.csv, and change d=8
+'''
+
 import numpy as np
 import baseline
 import regression
@@ -74,7 +84,8 @@ with open('data/augmented_features.csv', newline='') as csvfile:
             pct_severe_mistakes[iteration, patient_num] = num_severe_mistakes/num_total
             As[best_arm] += np.dot(xt, xtt)
             bs[best_arm] += (reward * xt)
-        print("permutation " + str(iteration) + ": " + str(pct_severe_mistakes[iteration, -1]))
+        print("permutation " + str(iteration) + ": " + str(linucb_correct_fractions[iteration, -1]))
+
 linucb_correct_stds = np.std(linucb_correct_fractions, axis=0)
 linucb_correct_fractions = np.mean(linucb_correct_fractions, axis=0)
 cum_regret_stds = np.std(cum_regret, axis=0)
@@ -102,7 +113,6 @@ linucb1_correct_pct = np.load("data/linucb1_correct_pct.npy")
 linucb1_regret = np.load("data/linucb1_regret.npy")
 linucb1_severe_pct = np.load("data/linucb1_severe_pct.npy")
 
-'''
 plt.plot(baseline.fixed_correct_fractions, label="fixed")
 plt.plot(baseline.linear_correct_fractions, label="linear")
 plt.plot(linucb1_correct_pct, label="initial LinUCB")
@@ -133,7 +143,6 @@ plt.ylabel('Percentage of Severe Mistakes')
 plt.title('Percentage of Severe Mistakes of Models Over Time')
 plt.legend()
 plt.show()
-'''
 
 plt.plot(pct_severe_mistakes, label="mean")
 plt.plot(severe_lower_bounds, label="lower bound")
@@ -162,5 +171,4 @@ plt.ylabel('Cumulative Regret')
 plt.title('Cumulative Regret of Augmented LinUCB Over Time')
 plt.legend()
 plt.show()
-
 

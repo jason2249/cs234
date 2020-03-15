@@ -1,3 +1,11 @@
+'''
+baseline.py
+
+Run the fixed dose and linear baselines on the patient data and save/plot results.
+Also parses the original patient csv file into either augmented_features.csv or features.csv.
+Plots the results of the baseline models.
+'''
+
 import csv
 import regression
 import matplotlib.pyplot as plt
@@ -153,7 +161,6 @@ with open('data/augmented_features.csv', 'w', newline='') as outfile:
     writer.writeheader()
     writer.writerows(outrows)
 
-'''
 plt.plot(linear_correct_fractions)
 plt.xlabel('Number of Patients Served')
 plt.ylabel('Correct Percentage')
@@ -167,10 +174,4 @@ plt.ylabel('Cumulative Regret')
 plt.title('Cumulative Regret of Baseline Dosing Algorithms Over Time')
 plt.legend()
 plt.show()
-'''
-
-
-
-
-
 
